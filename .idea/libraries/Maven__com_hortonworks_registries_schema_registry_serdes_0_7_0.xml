@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: com.hortonworks.registries:schema-registry-serdes:0.7.0">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/hortonworks/registries/schema-registry-serdes/0.7.0/schema-registry-serdes-0.7.0.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/com/hortonworks/registries/schema-registry-serdes/0.7.0/schema-registry-serdes-0.7.0-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/hortonworks/registries/schema-registry-serdes/0.7.0/schema-registry-serdes-0.7.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
