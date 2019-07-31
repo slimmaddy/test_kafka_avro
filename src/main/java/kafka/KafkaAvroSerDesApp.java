@@ -193,10 +193,10 @@ public class KafkaAvroSerDesApp {
         String schemaPath=KafkaAvroSerDesApp.class.getClassLoader().getResource("truck_events.avsc").getPath();
         String dataPath=KafkaAvroSerDesApp.class.getClassLoader().getResource("truck_events_json").getPath();
 
-//        KafkaAvroSerDesApp kafkaAvroSerDesApp = new KafkaAvroSerDesApp(pProsPath, schemaPath);
-//        kafkaAvroSerDesApp.sendMessages(dataPath);
+        KafkaAvroSerDesApp kafkaAvroSerDesApp = new KafkaAvroSerDesApp(pProsPath, schemaPath);
+        kafkaAvroSerDesApp.sendMessages(dataPath);
 
-        KafkaAvroSerDesApp kafkaAvroSerDesApp1 = new KafkaAvroSerDesApp(cProsPath);
-        kafkaAvroSerDesApp1.consumeMessages();
+//        KafkaAvroSerDesApp kafkaAvroSerDesApp1 = new KafkaAvroSerDesApp(cProsPath);
+//        kafkaAvroSerDesApp1.consumeMessages();
     }
 }
