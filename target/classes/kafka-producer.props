@@ -3,6 +3,4 @@ bootstrap.servers=adopt.hadoop74:6667
 client.id=client1
 schema.registry.url=http://adopt.hadoop74:9090/api/v1
 security.protocol=PLAINTEXT
-key.serializer=org.apache.kafka.common.serialization.StringSerializer
-value.serializer=com.hortonworks.registries.schemaregistry.serdes.avro.kafka.KafkaAvroSerializer
 ignoreInvalidMessages=true

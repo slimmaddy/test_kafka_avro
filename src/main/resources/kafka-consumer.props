@@ -4,7 +4,5 @@ group.id=group1
 enable.auto.commit=true
 schema.registry.url=http://adopt.hadoop74:9090/api/v1
 security.protocol=PLAINTEXT
-key.deserializer=org.apache.kafka.common.serialization.StringDeserializer
-value.deserializer=com.hortonworks.registries.schemaregistry.serdes.avro.kafka.KafkaAvroDeserializer
 auto.offset.reset=earliest
 

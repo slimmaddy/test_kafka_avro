@@ -17,6 +17,7 @@
 package kafka;
 
 import com.hortonworks.registries.schemaregistry.serde.SerDesException;
+import com.hortonworks.registries.schemaregistry.serdes.avro.kafka.KafkaAvroDeserializer;
 import com.hortonworks.registries.schemaregistry.serdes.avro.kafka.KafkaAvroSerde;
 import com.hortonworks.registries.schemaregistry.serdes.avro.kafka.KafkaAvroSerializer;
 import org.apache.avro.Schema;
@@ -31,14 +32,13 @@ import org.apache.commons.cli.Option;
 import org.apache.commons.cli.OptionGroup;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
+import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
-import org.apache.kafka.clients.producer.Callback;
-import org.apache.kafka.clients.producer.KafkaProducer;
-import org.apache.kafka.clients.producer.Producer;
-import org.apache.kafka.clients.producer.ProducerRecord;
-import org.apache.kafka.clients.producer.RecordMetadata;
+import org.apache.kafka.clients.producer.*;
+import org.apache.kafka.common.serialization.StringDeserializer;
+import org.apache.kafka.common.serialization.StringSerializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -106,6 +106,8 @@ public class KafkaAvroSerDesApp {
 
         // set protocol version to the earlier one.
         props.put(SERDES_PROTOCOL_VERSION, METADATA_ID_VERSION_PROTOCOL);
+        props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
+        props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, KafkaAvroSerializer.class);
         props.put(KafkaAvroSerializer.STORE_SCHEMA_VERSION_ID_IN_HEADER, "true");
         props.put(KafkaAvroSerde.VALUE_SCHEMA_VERSION_ID_HEADER_NAME, "value.schema.version.id");
         final Producer<String, Object> producer = new KafkaProducer<>(props);
@@ -171,6 +173,8 @@ public class KafkaAvroSerDesApp {
         try (FileInputStream inputStream = new FileInputStream(this.consumerProps)) {
             props.load(inputStream);
         }
+        props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
+        props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, KafkaAvroDeserializer.class);
         props.put(KafkaAvroSerde.VALUE_SCHEMA_VERSION_ID_HEADER_NAME, "value.schema.version.id");
         String topicName = props.getProperty(TOPIC);
         KafkaConsumer<String, Object> consumer = new KafkaConsumer<>(props);
@@ -192,11 +196,11 @@ public class KafkaAvroSerDesApp {
         String cProsPath=KafkaAvroSerDesApp.class.getClassLoader().getResource("kafka-consumer.props").getPath();
         String schemaPath=KafkaAvroSerDesApp.class.getClassLoader().getResource("truck_events.avsc").getPath();
         String dataPath=KafkaAvroSerDesApp.class.getClassLoader().getResource("truck_events_json").getPath();
+//
+//        KafkaAvroSerDesApp kafkaAvroSerDesApp = new KafkaAvroSerDesApp(pProsPath, schemaPath);
+//        kafkaAvroSerDesApp.sendMessages(dataPath);
 
-        KafkaAvroSerDesApp kafkaAvroSerDesApp = new KafkaAvroSerDesApp(pProsPath, schemaPath);
-        kafkaAvroSerDesApp.sendMessages(dataPath);
-
-//        KafkaAvroSerDesApp kafkaAvroSerDesApp1 = new KafkaAvroSerDesApp(cProsPath);
-//        kafkaAvroSerDesApp1.consumeMessages();
+        KafkaAvroSerDesApp kafkaAvroSerDesApp1 = new KafkaAvroSerDesApp(cProsPath);
+        kafkaAvroSerDesApp1.consumeMessages();
     }
 }
